@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            width: 750px;
+            height: 370px;
+        }
+        #box {
+            width: 760px;
+            height: 370px;
+            margin: 0 auto;
+            border: 1px solid #CCC;
+            overflow: hidden;
+            position: relative;
+        }
+        #box .item{
+            display: block;
+            width: 10px;
+            height: 10px;
+            background-color: #FFF;
+            border-radius: 50%;
+            float: left;
+            margin: 5px;
+        }
+        #box>div {
+            position: absolute;
+            top: 330px;
+            left: 350px;
+        }
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        #ul {
+            width: 3800px;
+            position: absolute;
+        }
+        #ul li {
+            padding: 5px;
+            float: left;
+        }
+        #box .active {
+            background-color: #db192a;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <ul id='ul'>
+        <li><img src="./image/pic1.jpg" alt=""></li>
+        <li><img src="./image/pic2.jpg" alt=""></li>
+        <li><img src="./image/pic3.jpg" alt=""></li>
+        <li><img src="./image/pic4.jpg" alt=""></li>
+        <li><img src="./image/pic5.jpg" alt=""></li>
+    </ul>
+    <div class="item-list">
+        <a href="" class="item active"></a>
+        <a href="" class="item"></a>
+        <a href="" class="item"></a>
+        <a href="" class="item"></a>
+        <a href="" class="item"></a>
+    </div>
+</div>
+<script>
+    // 获取ul
+    var ul = document.getElementById('ul');
+    // 获取小圆点
+    var item = document.getElementsByClassName('item');
+
+
+
+    // 自动轮播
+    function autoPlay() {
+        var flag = 1;
+        ul.timeId = setInterval(function(){
+            flag = flag>item.length-1?0:flag;
+            for(var j = 0;j<item.length;j++){
+                item[j].className = 'item';
+            }
+            item[flag].className = 'item active';
+            var target = flag * (-760);
+            animate1(ul,target);
+            flag++;
+        },2000)
+    }
+    autoPlay();
+    // 缓慢动画效果（可封装）；
+    function animate1(ele, target) {
+        // 清除上一个定时器
+        clearInterval(ele.timerId);
+        // 提供给元素绑定定时器
+        ele.timerId = setInterval(function() {
+
+            if (ele.offsetLeft == target) {
+                clearInterval(ele.timerId);
+            } else {
+                // 步长
+                var step = (target - ele.offsetLeft) / 10;
+                // console.log('取正之前' + step);
+                // 大于0向上取正，小于0的话，向下取正-这样才能走完
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                // console.log('取正过后' + step);
+                ele.style.left = ele.offsetLeft + step + 'px';
+                // 强调offsetLeft的返回值为四舍五入的后整数
+                // console.log(ele.offsetLeft);
+                // console.log(ele.style.left);
+            }
+        }, 10);
+    }
+</script>
+</body>
+</html>

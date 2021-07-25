@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<button onclick="btnFun();">onclick</button>
+<button id="btn">addListener</button>
+</body>
+<script>
+    //防抖函数是一个生成器，返回给每个相同的方法一个函数
+    function debounce(fn, wait) {
+        //正确的情况下这里的1111只会打印一次
+        console.log("1111");
+
+        let timer = null;
+        //此处返回的是一个函数
+        return function () {
+            //之后多次点击，这里的timer是上次执行所生成的timer，不为null
+            if (timer !== null) {
+                console.log(timer);
+                //把定时器清空
+                clearTimeout(timer);
+            }
+            //重新开始计时
+            timer = setTimeout(fn, wait);
+        }
+    }
+
+    function handle() {
+        console.log(Math.random());
+    }
+
+    // window.addEventListener("resize", debounce(handle, 1000));
+
+    let btn = document.getElementById("btn");
+    //addListener在注册监听时就得到了返回的函数，下次再点击就不会再执行debounce函数，而是执行返回的函数(即使用返回的函数作为点击的回调函数)
+    btn.addEventListener("click", debounce(handle, 1000));
+
+    //而onclick执行得到的就是返回的函数
+    //如果直接像下面这样写，第一种不会执行，第二种每次都返回一个新函数，都会按设定的事件依次执行
+    //第一种
+    // function btnFun(){
+    //     debounce(handle, 1000);
+    // }
+    //第二种
+    // function bntFun(){
+    //     debounce(handle, 1000)();
+    // }
+
+    // 正确的写法，先将返回的函数赋值给btnFun,然后点击的时候执行btnFun即可
+    let btnFun = debounce(handle, 1000);
+
+
+</script>
+</html>
