@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插入排序</title>
+    <div>
+        <span>排序之前：</span>
+        <span id="prev"></span>
+    </div>
+    <div>
+        <span>排序之后：</span>
+        <span id="after"></span>
+    </div>
+    <script>
+        //插入排序：稳定排序，时间复杂度O(n^2),空间复杂度O(1)。
+        //基本思想，分为两部分，有序部分和无序部分，每次对无序部分的第一个元素，在有序部分找到合适的位置插入进去
+        function insertSort(arr) {
+            let len = arr.length;
+            let sentinal,j = 0;
+            for(let i = 1; i < len; i++) {
+                sentinal = arr[i];//设置哨兵位置，因为基本思想是从后往前找，找到第一个小于等于的元素，元素一次往后覆盖，最后把哨兵位置的元素插入进去。
+                j = i - 1;//i是代表无序部分的第一个元素，则j是有序部分的最后一个元素，从最后一个元素依次往前找
+                while(j >= 0 && arr[j] > sentinal) {
+                    arr[j + 1] = arr[j];//把前一个元素的值赋值给后一个元素，起到覆盖作用
+                    j--;
+                }
+                arr[j + 1] = sentinal;//找到插入位置，将保存好的值插入到该位置
+            }
+            return arr;
+        }
+        let prev = [4, 5, 2, 2, 3, 1]
+        document.getElementById("prev").innerHTML = `[${prev}]`;
+        insertSort(prev)
+        document.getElementById("after").innerHTML = `[${prev}]`
+    </script>
+</head>
+<body>
+
+</body>
+</html>
