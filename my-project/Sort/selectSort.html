@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择排序</title>
+    <div>
+        <span>排序之前：</span>
+        <span id="prev"></span>
+    </div>
+    <div>
+        <span>排序之后：</span>
+        <span id="after"></span>
+    </div>
+    <script>
+        //选择排序，selectSort，时间复杂度O(n),空间复杂度O(1)
+        //基本思想：从未排序中的选择一个最小的放到排序的后面，不稳定的排序
+        function selectSort(arr) {
+            let len = arr.length;
+            let min;
+
+            for(let i = 0; i < len; i++) {
+                min = arr[i];
+                for(let j = i + 1; j < len; j++) {
+                    if(arr[j] < arr[min]) {
+                        min = j;
+                    }
+                }
+                if( i != min) {
+                    swap(arr, i, min);
+                    console.log(arr)
+                }
+            }
+            return arr;
+        }
+        function swap(arr, i, j) {
+            let temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+        let prev = [4, 5, 2, 2, 3, 1]
+        document.getElementById("prev").innerHTML = `[${prev}]`;
+        selectSort(prev)
+        document.getElementById("after").innerHTML = `[${prev}]`
+    </script>
+</head>
+<body>
+
+</body>
+</html>
