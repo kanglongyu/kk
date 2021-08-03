@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bubbleSort</title>
+    <div>
+        <span>排序之前：</span>
+        <span id="prev"></span>
+    </div>
+    <div>
+        <span>排序之后：</span>
+        <span id="after"></span>
+    </div>
+    <script>
+        //冒泡排序算法，时间复杂度O(n^2),空间复杂度O(1);
+        //稳定排序算法，两个相同的值在排序之后相对位置没有发生变化
+        function bubbleSort(arr) {
+            let len = arr.length;
+            for(let i = 0; i < len - 1; ++i) {
+                for(let j = 0; j < len - i - 1; ++j) {
+                    if(arr[j] > arr[j + 1]) {
+                        swap(arr, j, j + 1);
+                    }
+                }
+            }
+            return arr;
+        }
+
+        function swap(arr, i, j) {
+            let temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+        let prev = [4, 5, 2, 3, 1]
+        document.getElementById("prev").innerHTML = `[${prev}]`;
+        bubbleSort(prev)
+        document.getElementById("after").innerHTML = `[${prev}]`
+    </script>
+</head>
+<body>
+</body>
+</html>
